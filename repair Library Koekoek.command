@@ -6,9 +6,6 @@ PHOTOLIBRARYUSER="koekoek"
 CURRENTDIR="$(dirname "$0")"
 AANTALLIBRARIES="$(find "$CURRENTDIR" ! -perm -g+r,u+r,o+r -prune -name '*.photoslibrary' | wc -l | sed 's/[[:space:]]//g')"
 
-pause(){
- read -n1 -rsp $"Druk op een toets om door te gaan of 'Ctrl C' om af te sluiten...\n"
-}
 quit(){
  read -n1 -rsp $'Druk op een toest om af te sluiten...\n'
  exit
@@ -39,7 +36,7 @@ then
 	echo "Stap 1, inloggen als \"${ADMINUSER}\"."
 	echo "Stap 2. Druk op 'Command V'."
 	echo "###################################"
-	ADMINCOMMAND="echo && echo 'Let op: De reparatie kan tot 30 minuten duren!' && echo 'login: "${ADMINUSER}"' && sudo chown -R ${PHOTOLIBRARYUSER} \""${CURRENTDIR}"\"/*.photoslibrary && sudo chmod -R 700 \""${CURRENTDIR}"\"/*.photoslibrary && exit"
+	ADMINCOMMAND="echo && echo 'Let op: De reparatie kan tot 30 minuten duren!' && echo 'login: "${ADMINUSER}"' && sudo chown -R ${PHOTOLIBRARYUSER} \""${CURRENTDIR}"\"/*.photoslibrary && echo 'login: "${ADMINUSER}"' && sudo chmod -R 700 \""${CURRENTDIR}"\"/*.photoslibrary && exit"
 	# echo "${ADMINCOMMAND}"
 	echo "${ADMINCOMMAND}"| pbcopy
 	echo
@@ -47,14 +44,12 @@ then
 	login "${ADMINUSER}"
 else 
 	# gebruiker is geen admin
-    echo "Je wil inloggen als \"${ADMINUSER}\", maar deze gebruiker heeft geen admin rechten.";
+    echo "Je wil inloggen als \"${ADMINUSER}\", maar deze gebruiker heeft geen admin rechten."
 	quit
 	# exit
 fi
 
-echo "Klaar!"
-echo "'Photos' kan nu de rest van de bibliotheek herstellen."
-
+echo "Klaar"
 echo
-pause
+quit
 # exit
